@@ -1,0 +1,422 @@
+[colors]
+;from dracula git
+background = #282a36
+foreground = #f8f8f2
+background-alt = #44475a
+foreground-alt = #44475a
+primary = #ff79c6
+secondary = #bd93f9
+cyan = #8be9fd
+green = #50fa7b
+orange = #ffb86c
+pink = #ff79c6
+purple = #bd93f9
+red = #ff5555
+yellow = #f1fa8c
+
+[bar/top]
+monitor = ${env:MONITOR:DP-0}
+width = 2540
+height = 25
+offset-x = 10
+offset-y = 10
+fixed-center = true
+bottom = false
+margin-bottom = 0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+border-color = ${colors.background-alt}
+border-size = 2
+
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 2
+module-margin-right = 0
+
+font-0 = fixed:pixelsize=10;2
+font-1 = "Material Icons:style=Regular=12;2"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
+font-3 = "Font Awesome 5 Brands:style=Regular:pixelsize=12;2"
+
+
+modules-left = jgmenu terminal thunar firefox seperator
+modules-center = date
+modules-right = spotify pulseaudio pacman-updates eth temperature powermenu seperator
+
+
+wm-restack = bspwm
+
+override-redirect = false
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+tray-position = right
+tray-background = ${colors.background}
+tray-padding = 1
+
+
+;MODULES
+;modules
+;MODULES
+
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %index%
+label-focused-foreground = ${colors.foreground-alt}
+label-focused-background = ${colors.background2}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 2
+
+label-occupied = %index%
+label-occupied-padding = 2
+
+label-urgent = %index%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = %index%
+label-empty-foreground = ${colors.foreground}
+label-empty-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-foreground = ${colors.primary}
+label-focused-background = ${module/bspwm.label-focused-background}
+label-focused-underline = ${colors.foreground}
+label-focused-padding = ${module/bspwm.label-focused-padding}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+label-unfocused-foreground = ${module/bspwm.label-focused-foreground}
+label-unfocused-background = ${module/bspwm.label-focused-background}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-foreground = ${module/bspwm.label-focused-foreground}
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${module/bspwm.label-urgent-background}
+label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
+; Separator in between workspaces
+; label-separator = |
+
+
+
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+format-background = ${colors.cpucircle-fg}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-background = ${colors.ramcircle-fg}
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+label = %percentage_used%%
+
+[module/eth]
+type = internal/network
+interface = enp3s0
+interval = 3.0
+
+label-connected = %local_ip%
+label-disconnected = %ifname% disconnected
+
+format-connected-background = ${colors.background}
+format-connected-underline = ${colors.green}
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground}
+format-connected-padding = 1
+
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.red}
+format-disconnected-background = ${colors.background}
+format-disconnected-underline = ${colors.red}
+label-disconnected-foreground = ${colors.red}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d.%m.%y"
+
+time = %H:%M
+time-alt =
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #00000000
+
+label = %date% %time%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+interval = 0.5
+
+format-volume = <label-volume>
+label-volume = Vol: %percentage%%
+label-volume-foreground = ${colors.foreground}
+label-volume-underline = ${colors.primary}
+label-volume-padding = 1
+
+label-muted = Vol: 
+label-muted-foreground = ${colors.foreground}
+label-muted-underline = ${colors.primary}
+label-muted-padding = 1
+
+bar-volume-width = 5
+bar-volume-foreground-0 = ${colors.primary}
+bar-volume-foreground-1 = ${colors.primary}
+bar-volume-foreground-2 = ${colors.primary}
+bar-volume-foreground-3 = ${colors.primary}
+bar-volume-foreground-4 = ${colors.primary}
+bar-volume-foreground-5 = ${colors.primary}
+bar-volume-foreground-6 = ${colors.primary}
+bar-volume-gradient = false
+bar-volume-indicator = 
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = sound muted
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 2
+warn-temperature = 75
+format = <label>
+format-warn = <label-warn>
+format-background = ${colors.background}
+format-underline = ${colors.cyan}
+format-warn-underline = ${colors.red}
+
+label =  %temperature-c%
+label-padding = 1
+label-warn =  %temperature-c%
+label-warn-foreground = ${colors.red}
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = false
+format-spacing = 1
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+
+label-open = "    "
+label-open-foreground = ${colors.foreground}
+label-close = "    "
+label-close-foreground = ${colors.foreground}
+label-separator = |
+label-separator-foreground = ${colors.background}
+label-open-padding = 0
+label-close-padding = 0
+label-open-underline = ${colors.red}
+label-close-underline = ${colors.red}
+
+menu-0-0 = "  "
+menu-0-0-exec = menu-open-1
+menu-0-2 = %{T6}%{T-}
+menu-0-2-exec = menu-open-3
+menu-0-1 = 
+menu-0-1-exec = menu-open-2
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+menu-0-4 = 
+menu-0-4-exec = menu-open-5
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = reboot
+
+menu-2-0 = power off
+menu-2-0-exec = poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+menu-3-0 = cancel
+menu-3-0-exec = menu-open-0
+menu-3-1 = reboot to windows
+menu-3-1-exec = "sudo /home/valtteri/.config/polybar/rebootwindows.sh"
+
+menu-4-0 = lock
+menu-4-0-exec = "i3lock -c 000000 && sleep 1 && xset s activate"
+menu-4-1 = cancel
+menu-4-1-exec = menu-open-0
+
+menu-5-0 = suspend
+menu-5-0-exec = "i3lock -c 000000 && sleep 1 && systemctl suspend"
+menu-5-1 = cancel
+menu-5-1-exec = menu-open-0
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+format = <label>
+format-padding = 1
+exec = python /home/valtteri/.config/polybar/polybar-spotify/spotify_status.py -f '{artist}: {song}'
+format-underline = ${colors.green}
+
+[module/pacman-updates]
+type = custom/script
+exec = checkupdates | wc -l
+interval = 250
+label =  %output%
+label-padding = 1
+format-background = ${colors.background}
+format-underline = ${colors.purple}
+click-left = "pamac-manager &"
+
+[module/firefox]
+type = custom/script
+label = ""
+label-font = 7
+label-padding = 1
+interval = 120
+exec = echo ""
+click-left = "firefox &"
+label-background = ${colors.background}
+label-foreground = ${colors.foreground}
+
+[module/thunar]
+type = custom/script
+label = ""
+label-padding = 1
+interval = 120
+exec = echo ""
+click-left = "thunar"
+label-background = ${colors.background}
+label-foreground = ${colors.foreground}
+
+[module/terminal]
+type = custom/script
+label = ""
+label-padding = 1
+interval = 120
+exec = echo ""
+click-left = "konsole"
+label-background = ${colors.background}
+label-foreground = ${colors.foreground}
+
+[module/jgmenu]
+type = custom/text
+content-padding = 1
+content = "  "
+click-left = "jgmenu_run >/dev/null 2>&1 &"
+content-background = ${colors.background}
+content-foreground = ${colors.foreground}
+
+[module/seperator]
+type = custom/text
+content-padding = 1
+content = "|"
+content-background = ${colors.background}
+content-foreground = ${colors.foreground}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
